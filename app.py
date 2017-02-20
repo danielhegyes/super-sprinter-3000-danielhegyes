@@ -34,13 +34,8 @@ class Stories(BaseModel):
     status = CharField()
 
 
-    def __init__(self, story_t, user_s, acceptance_c, business_v, est, stat):
-        self.story_title = story_t
-        self.user_story = user_s
-        self.acceptance_criteria = acceptance_c
-        self.business_value = business_v
-        self.estimation = est
-        self.status = stat
+
+
 
 
 
@@ -60,11 +55,11 @@ def story_page():
 
 @app.route('/post_story', methods=['POST'])
 def post_story():
-    stories = Stories(request.form['story_title'], request.form['user_story'], request.form['acceptance_criteria'], request.form['business_value'], request.form['estimation'], request.form['status'])
-    ConnectDatabase.db.session.add(stories)
-    ConnectDatabase.db.session.commit()
+    stories = Stories.create(story_title = request.form['story_title'], user_story = request.form['user_story'], acceptance_criteria = request.form['acceptance_criteria'], business_value = request.form['business_value'], estimation = request.form['estimation'], status = request.form['status'])
+    ConnectDatabase.db.commit()
 
     return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.run()
+
