@@ -43,10 +43,17 @@ ConnectDatabase.get_db().connect()
 ConnectDatabase.get_db().drop_tables([Stories], safe=True, cascade=True)
 ConnectDatabase.get_db().create_tables([Stories], safe=True)
 
+def table_to_list(query):
+    table_list = []
+    for i in query:
+        i = str(i)
+        table_list.append(i)
+        return table_list
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     db_select = Stories.select()
+    print(db_select)
     return render_template('list.html', db_select=db_select)
 
 @app.route('/story_page', methods=['POST'])
